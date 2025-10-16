@@ -1,43 +1,43 @@
 erDiagram
 
   users {
-    int id PK
+    uuid id PK "binary UUID"
     string login
     string password
     string role
-    datetime created_at
-    datetime updated_at
-    datetime deleted_at
+    bigint created_at "timestamp"
+    bigint updated_at "timestamp"
+    bigint deleted_at "timestamp"
   }
 
   tables {
-    int id PK
-    int uploaded_by FK
+    uuid id PK "binary UUID"
+    uuid uploaded_by FK "binary UUID -> users.id"
     string file_path
-    datetime created_at
-    datetime deleted_at
+    bigint created_at "timestamp"
+    bigint deleted_at "timestamp"
   }
 
   table_columns {
-    int id PK
-    int table_id FK
+    uuid id PK "binary UUID"
+    uuid table_id FK "binary UUID -> tables.id"
     string name
     string type
   }
 
   charts {
-    int id PK
+    uuid id PK "binary UUID"
     string type
-    int table_id FK
+    uuid table_id FK "binary UUID -> tables.id"
     string name
-    datetime created_at
-    datetime updated_at
-    datetime deleted_at
+    bigint created_at "timestamp"
+    bigint updated_at "timestamp"
+    bigint deleted_at "timestamp"
   }
 
   chart_metrics {
-    int id PK
-    int chart_id FK
+    uuid id PK "binary UUID"
+    uuid chart_id FK "binary UUID -> charts.id"
     string column
     string aggregate_func
     string color
@@ -45,19 +45,19 @@ erDiagram
   }
 
   chart_filters {
-    int id PK
-    int chart_id FK
+    uuid id PK "binary UUID"
+    uuid chart_id FK "binary UUID -> charts.id"
     string column_name
     string operator
     string value
   }
 
   charts_accesses {
-    int id PK
-    int user_id FK
-    int chart_id FK
-    datetime created_at
-    datetime deleted_at
+    uuid id PK "binary UUID"
+    uuid user_id FK "binary UUID -> users.id"
+    uuid chart_id FK "binary UUID -> charts.id"
+    bigint created_at "timestamp"
+    bigint deleted_at "timestamp"
   }
 
   %% --- связи ---

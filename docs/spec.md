@@ -182,62 +182,66 @@
 
 ## Таблицы
 
-1. users
+1. **users**
+   - id  
+   - login  
+   - password  
+   - role (`admin` / `director`)  
+   - created_at  
+   - updated_at  
+   - deleted_at  
 
-   - id
-   - login
-   - password
-   - role
-   - created_at
-   - updated_at
-   - deleted_at
+2. **tables**
+   - id  
+   - uploaded_by → users.id  
+   - file_path  
+   - created_at  
+   - deleted_at  
 
-2. tables
+3. **table_columns**
+   - id  
+   - table_id → tables.id  
+   - name  
+   - type  
 
-   - id
-   - uploaded_by -> users
-   - file_path
-   - created_at
-   - deleted_at
+4. **charts**
+   - id  
+   - type  
+   - table_id → tables.id  
+   - name  
+   - created_at  
+   - updated_at  
+   - deleted_at  
 
-3. table_columns
+5. **chart_metrics**
+   - id  
+   - chart_id → charts.id  
+   - column  
+   - aggregate_func  
+   - color  
+   - label  
 
-   - id
-   - table_id -> tables
-   - name
-   - type
+6. **chart_filters**
+   - id  
+   - chart_id → charts.id  
+   - column_name  
+   - operator  
+   - value  
 
-4. charts
+7. **charts_accesses**
+   - id  
+   - user_id → users.id  
+   - chart_id → charts.id  
+   - created_at  
+   - deleted_at  
 
-   - id
-   - type
-   - table_id -> tables
-   - name
-   - created_at
-   - updated_at
-   - deleted_at
+---
 
-5. chart_metrics
+## Поток работы администратора (пример)
 
-   - id
-   - chart_id -> charts
-   - column
-   - aggregate_func
-   - color
-   - label
-
-6. chart_filters
-
-   - id
-   - chart_id -> charts
-   - column_name
-   - operator
-   - value
-
-7. charts_accesses
-
-   - id
-   - user_id -> users
-   - chart_id -> charts
-   - created_at
-   - deleted_at
+1. Загрузка таблицы → создаётся запись в `tables`.  
+2. Определяются колонки → `table_columns`.  
+3. Создаётся график → `charts`.  
+4. Добавляются метрики и фильтры → `chart_metrics`, `chart_filters`.  
+5. Настраиваются доступы → `charts_accesses`.  
+6. Директор видит график на своём дашборде
