@@ -1,0 +1,70 @@
+erDiagram
+
+  users {
+    int id PK
+    string login
+    string password
+    string role
+    datetime created_at
+    datetime updated_at
+    datetime deleted_at
+  }
+
+  tables {
+    int id PK
+    int uploaded_by FK
+    string file_path
+    datetime created_at
+    datetime deleted_at
+  }
+
+  table_columns {
+    int id PK
+    int table_id FK
+    string name
+    string type
+  }
+
+  charts {
+    int id PK
+    string type
+    int table_id FK
+    string name
+    datetime created_at
+    datetime updated_at
+    datetime deleted_at
+  }
+
+  chart_metrics {
+    int id PK
+    int chart_id FK
+    string column
+    string aggregate_func
+    string color
+    string label
+  }
+
+  chart_filters {
+    int id PK
+    int chart_id FK
+    string column_name
+    string operator
+    string value
+  }
+
+  charts_accesses {
+    int id PK
+    int user_id FK
+    int chart_id FK
+    datetime created_at
+    datetime deleted_at
+  }
+
+  %% --- связи ---
+  users ||--o{ tables : "uploaded_by"
+  tables ||--o{ table_columns : "columns"
+  tables ||--o{ charts : "source"
+  charts ||--o{ chart_metrics : "metrics"
+  charts ||--o{ chart_filters : "filters"
+  users ||--o{ charts_accesses : "access"
+  charts ||--o{ charts_accesses : "access"
